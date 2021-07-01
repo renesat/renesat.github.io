@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Title -->
-        <title>Boring Geek Blog - Home</title>
+        <title>Idea Glue Blog - Home of my idea</title>
         <link rel="stylesheet" href="./css/default.css" />
 
         <!-- Fonts -->
@@ -14,24 +14,25 @@
 
 
         <!-- Code highlight -->
-        
+        <link rel="stylesheet" href="./css/nord-code.css">
 
         <!-- Math -->
-        
-
+        <!-- 
+        -->
         <!-- RSS -->
-        <link rel="alternate" type="application/rss+xml" title="Boring Geek Blog :: RSS" href="./rss.xml" />
-        <link rel="alternate" type="application/atom+xml" title="Boring Geek Blog :: Atom" href="./atom.xml" />
+        <link rel="alternate" type="application/rss+xml" title="Idea Glue Blog :: RSS" href="./rss.xml" />
+        <link rel="alternate" type="application/atom+xml" title="Idea Glue Blog :: Atom" href="./atom.xml" />
 
     </head>
     <body>
 
-        
-
+        <!-- 
+        -->
         <header>
             <div class="logo">
                 <a href="./">
-                    <span style="color: #a3be8c">B</span><span style="color: #d08770">o</span><span style="color: #ebcb8b">r</span><span style="color: #b48ead">i</span><span style="color: #bf616a">n</span><span style="color: #8fbcbb">g</span> Geek Blog
+                    <span style="color: #d08770">I</span><span style="color: #a3be8c">D</span><span style="color: #ebcb8b">E</span><span style="color: #b48ead">A</span> Glue Blog
+                    <!-- <span style="color: #a3be8c">B</span><span style="color: #d08770">o</span><span style="color: #ebcb8b">r</span><span style="color: #b48ead">i</span><span style="color: #bf616a">n</span><span style="color: #8fbcbb">g</span> Geek Blog -->
                 </a>
             </div>
             <nav>
@@ -43,14 +44,45 @@
 
         <main role="main">
             <h1 id="title">
-                Home
+                Home of my idea
             </h1>
             <ul id="posts-list">
+    
+        <li>
+            <hr class="post-boarder" />
+            <article>
+                <h1 class="teaser-title"><a href="./posts/svg_to_ico_in_hakyll.html">How convert SVG icon to favicon in Hakyll</a></h1>
+                <section class="header">
+                    Posted on July  1, 2021
+                    <br>
+                    
+                    Tags: hakyll, haskell, blog
+                    
+                </section>
+
+
+                
+                  <p>I am using Hakyll for this blog. And I have a problem start script for every icon change. And I thought: Why am I not using Hakyll to do this?</p>
+<p>Icon has been created in Inkscape with SVG format. A script like this converted SVG icon to PNG:</p>
+<div class="highlight"><pre><span></span>inkscape -w <span class="m">16</span> -h <span class="m">16</span> icon-16.png icon.svg
+inkscape -w <span class="m">32</span> -h <span class="m">32</span> icon-32.png icon.svg
+convert icon-16.png icon-32.png favicon.ico
+</pre></div>
+
+
+                
+
+                <p><a class="readmore" href="./posts/svg_to_ico_in_hakyll.html">Read more..</a></p>
+            </article>
+
+        </li>
     
 </ul>
 
 
         </main>
+
+        <br>
 
         <footer>
             <!-- Icons source: https://iconmonstr.com/ -->
