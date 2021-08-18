@@ -17,8 +17,9 @@
         <link rel="stylesheet" href="./css/nord-code.css">
 
         <!-- Math -->
-        <!-- 
-        -->
+
+        
+
         <!-- RSS -->
         <link rel="alternate" type="application/rss+xml" title="Idea Glue Blog :: RSS" href="./rss.xml" />
         <link rel="alternate" type="application/atom+xml" title="Idea Glue Blog :: Atom" href="./atom.xml" />
@@ -26,8 +27,6 @@
     </head>
     <body>
 
-        <!-- 
-        -->
         <header>
             <div class="logo">
                 <a href="./">
@@ -64,8 +63,8 @@
                 
                   <p>I am using Hakyll for this blog. And I have a problem start script for every icon change. And I thought: Why am I not using Hakyll to do this?</p>
 <p>Icon has been created in Inkscape with SVG format. A script like this converted SVG icon to PNG:</p>
-<div class="highlight"><pre><span></span>inkscape -w <span class="m">16</span> -h <span class="m">16</span> icon-16.png icon.svg
-inkscape -w <span class="m">32</span> -h <span class="m">32</span> icon-32.png icon.svg
+<div class="highlight"><pre><span></span>inkscape -w <span class="m">16</span> -h <span class="m">16</span> -o icon-16.png icon.svg
+inkscape -w <span class="m">32</span> -h <span class="m">32</span> -o icon-32.png icon.svg
 convert icon-16.png icon-32.png favicon.ico
 </pre></div>
 
