@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <title>Idea Glue Blog</title>
-    <link href="https://renesat.github.io/atom.xml" rel="self" />
-    <link href="https://renesat.github.io" />
-    <id>https://renesat.github.io/atom.xml</id>
+    <title>IDEA Glue Blog</title>
+    <link href="https://www.renesat.me/atom.xml" rel="self" />
+    <link href="https://www.renesat.me" />
+    <id>https://www.renesat.me/atom.xml</id>
     <author>
         <name>renesat</name>
         <email>smol.ivan97@gmail.com</email>
@@ -11,8 +11,8 @@
     <updated>2021-07-01T00:00:00Z</updated>
     <entry>
     <title>How convert SVG icon to favicon in Hakyll</title>
-    <link href="https://renesat.github.io/posts/svg_to_ico_in_hakyll.html" />
-    <id>https://renesat.github.io/posts/svg_to_ico_in_hakyll.html</id>
+    <link href="https://www.renesat.me/posts/svg_to_ico_in_hakyll.html" />
+    <id>https://www.renesat.me/posts/svg_to_ico_in_hakyll.html</id>
     <published>2021-07-01T00:00:00Z</published>
     <updated>2021-07-01T00:00:00Z</updated>
     <summary type="html"><![CDATA[<p>I am using Hakyll for this blog. And I have a problem start script for every icon change. And I thought: Why am I not using Hakyll to do this?</p>
