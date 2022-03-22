@@ -41,19 +41,21 @@
         </header>
 
         <main role="main">
-            <h1 id="title">
-                How convert SVG icon to favicon in Hakyll
-            </h1>
-            <article>
-    <section class="header">
-        Posted on July  1, 2021
+            <article class="h-entry">
+    <h1 class="p-name" id="title">
+        How convert SVG icon to favicon in Hakyll
+    </h1>
+    <section class="header e-content">
+        Posted on <time class="dt-published" datetime="2021-07-01">July  1, 2021</time>
+                    
     </section>
     <div class="header">
         
-        Tags: hakyll, haskell, blog
+        Tags: <div rel="tag" class="p-category">hakyll, haskell, blog</div>
+        <!-- TODO: add class for each tag -->
         
     </div>
-    <section>
+    <section class="e-content">
         <p>I am using Hakyll for this blog. And I have a problem start script for every icon change. And I thought: Why am I not using Hakyll to do this?</p>
 <p>Icon has been created in Inkscape with SVG format. A script like this converted SVG icon to PNG:</p>
 <div class="highlight"><pre><span></span>inkscape -w <span class="m">16</span> -h <span class="m">16</span> -o icon-16.png icon.svg
