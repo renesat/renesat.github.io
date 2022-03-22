@@ -8,13 +8,13 @@
         <name>renesat</name>
         <email>smol.ivan97@gmail.com</email>
     </author>
-    <updated>2021-07-01T00:00:00Z</updated>
+    <updated>2021-07-01T20:38:31Z</updated>
     <entry>
     <title>How convert SVG icon to favicon in Hakyll</title>
     <link href="https://www.renesat.me/posts/svg_to_ico_in_hakyll.html" />
     <id>https://www.renesat.me/posts/svg_to_ico_in_hakyll.html</id>
-    <published>2021-07-01</published>
-    <updated>2021-07-01T00:00:00Z</updated>
+    <published>2021-07-01T20:38:31</published>
+    <updated>2021-07-01T20:38:31Z</updated>
     <summary type="html"><![CDATA[<p>I am using Hakyll for this blog. And I have a problem start script for every icon change. And I thought: Why am I not using Hakyll to do this?</p>
 <p>Icon has been created in Inkscape with SVG format. A script like this converted SVG icon to PNG:</p>
 <div class="highlight"><pre><span></span>inkscape -w <span class="m">16</span> -h <span class="m">16</span> -o icon-16.png icon.svg
