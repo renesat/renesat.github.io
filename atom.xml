@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>IDEA Glue Blog</title>
-    <link href="https://www.renesat.me/atom.xml" rel="self" />
-    <link href="https://www.renesat.me" />
-    <id>https://www.renesat.me/atom.xml</id>
+    <link href="https://renesat.me/atom.xml" rel="self" />
+    <link href="https://renesat.me" />
+    <id>https://renesat.me/atom.xml</id>
     <author>
         <name>renesat</name>
-        <email>smol.ivan97@gmail.com</email>
+        <email>self@renesat.me</email>
     </author>
     <updated>2021-07-01T20:38:31Z</updated>
     <entry>
     <title>How convert SVG icon to favicon in Hakyll</title>
-    <link href="https://www.renesat.me/posts/svg_to_ico_in_hakyll.html" />
-    <id>https://www.renesat.me/posts/svg_to_ico_in_hakyll.html</id>
-    <published>2021-07-01T20:38:31</published>
+    <link href="https://renesat.me/posts/svg_to_ico_in_hakyll.html" />
+    <id>https://renesat.me/posts/svg_to_ico_in_hakyll.html</id>
+    <published>2021-07-01T20:38:31Z</published>
     <updated>2021-07-01T20:38:31Z</updated>
     <summary type="html"><![CDATA[<p>I am using Hakyll for this blog. And I have a problem start script for every icon change. And I thought: Why am I not using Hakyll to do this?</p>
 <p>Icon has been created in Inkscape with SVG format. A script like this converted SVG icon to PNG:</p>
