@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>IDEA Glue Blog</title>
+    <link href="https://renesat.me/atom.xml" rel="self" />
+    <link href="https://renesat.me" />
+    <id>https://renesat.me/atom.xml</id>
+    <author>
+        <name>renesat</name>
+        
+        <email>self@renesat.me</email>
+        
+    </author>
+    <updated>2021-07-01T20:38:31Z</updated>
+    <entry>
+    <title>How convert SVG icon to favicon in Hakyll</title>
+    <link href="https://renesat.me/posts/svg_to_ico_in_hakyll.html" />
+    <id>https://renesat.me/posts/svg_to_ico_in_hakyll.html</id>
+    <published>2021-07-01T20:38:31Z</published>
+    <updated>2021-07-01T20:38:31Z</updated>
+    <summary type="html"><![CDATA[<p>I am using Hakyll for this blog. And I have a problem start script for every icon change.
+And I thought: Why am I not using Hakyll to do this?</p>
+<p>Icon has been created in Inkscape with SVG format.
+A script like this converted SVG icon to PNG:</p>
+<div class="highlight"><pre><span></span>inkscape<span class="w"> </span>-w<span class="w"> </span><span class="m">16</span><span class="w"> </span>-h<span class="w"> </span><span class="m">16</span><span class="w"> </span>-o<span class="w"> </span>icon-16.png<span class="w"> </span>icon.svg
+inkscape<span class="w"> </span>-w<span class="w"> </span><span class="m">32</span><span class="w"> </span>-h<span class="w"> </span><span class="m">32</span><span class="w"> </span>-o<span class="w"> </span>icon-32.png<span class="w"> </span>icon.svg
+convert<span class="w"> </span>icon-16.png<span class="w"> </span>icon-32.png<span class="w"> </span>favicon.ico
+</pre></div>
+
+<!--more-->
+
+<p>I am not using only ImageMagick because it doesn’t convert the background correctly.
+Twice start Inkscape is not a good idea. I find
+parameter <strong><code>actions</code></strong> and rewrite the script for run Inkscape once:</p>
+<div class="highlight"><pre><span></span>inkscape<span class="w"> </span>--without-gui<span class="w"> </span>--actions<span class="w"> </span><span class="s2">&quot;export-width:16px; export-filename:icon-16.png; export-do; export-width:32px; export-filename:icon-32.png; export-do;&quot;</span><span class="w"> </span>icon.svg
+convert<span class="w"> </span>icon-16.png<span class="w"> </span>icon-32.png<span class="w"> </span>favicon.ico
+</pre></div>
+
+<p>It’s a long command but good for a script running speed (I don’t know why I need this…).</p>
+<p>I create a new route in Hakyll with <strong><em>icon.svg</em></strong> depend:</p>
+<div class="highlight"><pre><span></span><span class="nf">iconDep</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">makePatternDependency</span><span class="w"> </span><span class="s">&quot;images/icon.svg&quot;</span>
+<span class="nf">rulesExtraDependencies</span><span class="w"> </span><span class="p">[</span><span class="n">iconDep</span><span class="p">]</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">create</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;favicon.ico&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">    </span><span class="n">route</span><span class="w">   </span><span class="n">idRoute</span>
+<span class="w">    </span><span class="n">compile</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">faviconCompiler</span><span class="w"> </span><span class="s">&quot;site/images/icon.svg&quot;</span>
+</pre></div>
+
+<p><strong><code>faviconCompiler</code></strong> create <strong><em>favicon.ico</em></strong> using <strong><em>icon.svg</em></strong>:</p>
+<div class="highlight"><pre><span></span><span class="nf">faviconCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">LBS</span><span class="o">.</span><span class="kt">ByteString</span><span class="p">)</span>
+<span class="nf">faviconCompiler</span><span class="w"> </span><span class="n">svgPath</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="kr">let</span><span class="w"> </span><span class="n">sizes</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">[</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">]</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+<span class="w">  </span><span class="kr">in</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">    </span><span class="n">tmpFiles</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">getFaviconPngs</span><span class="w"> </span><span class="n">svgPath</span><span class="w"> </span><span class="n">sizes</span>
+<span class="w">    </span><span class="n">paths</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">return</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="kt">TmpFile</span><span class="w"> </span><span class="n">tmpPath</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">tmpPath</span><span class="p">)</span><span class="w"> </span><span class="n">tmpFiles</span>
+<span class="w">    </span><span class="n">ico</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">unixFilterLBS</span><span class="w"> </span><span class="s">&quot;convert&quot;</span><span class="w"> </span><span class="p">(</span><span class="n">paths</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;ico:-&quot;</span><span class="p">])</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">makeItem</span><span class="w"> </span><span class="n">ico</span>
+</pre></div>
+
+<p>Function <strong><code>getFaviconPngs</code></strong> create multiple <a href="https://hackage.haskell.org/package/hakyll-4.14.0.0/docs/Hakyll-Core-File.html#t:TmpFile">TmpFile</a> and PNG for each size.
+Inkscape starts once using <a href="https://hackage.haskell.org/package/process-1.6.11.0/docs/System-Process.html">Hakyll’s process</a>.</p>
+<div class="highlight"><pre><span></span><span class="nf">createFaviconExportLine</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">TmpFile</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
+<span class="nf">createFaviconExportLine</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="p">(</span><span class="kt">TmpFile</span><span class="w"> </span><span class="n">path</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="s">&quot;export-width:&quot;</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="n">show</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="s">&quot;px; export-filename:&quot;</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="s">&quot;; export-do;&quot;</span>
+
+<span class="nf">getFaviconPngs</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">Int</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">[</span><span class="kt">TmpFile</span><span class="p">]</span>
+<span class="nf">getFaviconPngs</span><span class="w"> </span><span class="n">svgPath</span><span class="w"> </span><span class="n">sizes</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="n">tmpFiles</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">sequence</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">map</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">\</span><span class="n">size</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">newTmpFile</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="s">&quot;hakyll-blog-favicon-&quot;</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="n">show</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="s">&quot;.png&quot;</span><span class="p">)</span>
+<span class="w">      </span><span class="n">sizes</span>
+<span class="w">  </span><span class="n">actions</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">return</span>
+<span class="w">    </span><span class="o">$</span><span class="w"> </span><span class="n">foldr1</span><span class="w"> </span><span class="p">(</span><span class="o">++</span><span class="p">)</span>
+<span class="w">    </span><span class="o">$</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="p">(</span><span class="n">uncurry</span><span class="w"> </span><span class="n">createFaviconExportLine</span><span class="p">)</span>
+<span class="w">    </span><span class="o">$</span><span class="w"> </span><span class="n">zip</span><span class="w"> </span><span class="n">sizes</span><span class="w"> </span><span class="n">tmpFiles</span>
+<span class="w">  </span><span class="p">(</span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="n">handle</span><span class="p">)</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">unsafeCompiler</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">createProcess</span>
+<span class="w">        </span><span class="p">(</span><span class="n">proc</span><span class="w"> </span><span class="s">&quot;inkscape&quot;</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;--without-gui&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--actions&quot;</span><span class="p">,</span><span class="w">  </span><span class="n">actions</span><span class="p">,</span><span class="w"> </span><span class="n">svgPath</span><span class="p">])</span>
+<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="n">std_err</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">NoStream</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">std_out</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">NoStream</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">use_process_jobs</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">True</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">  </span><span class="kr">_</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">unsafeCompiler</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">waitForProcess</span><span class="w"> </span><span class="n">handle</span>
+<span class="w">  </span><span class="n">return</span><span class="w"> </span><span class="n">tmpFiles</span>
+</pre></div>
+
+<p>Finally, I use ImageMagick for creating ICO:</p>
+<div class="highlight"><pre><span></span><span class="o">...</span>
+<span class="w">    </span><span class="n">ico</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">unixFilterLBS</span><span class="w"> </span><span class="s">&quot;convert&quot;</span><span class="w"> </span><span class="p">(</span><span class="n">paths</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;ico:-&quot;</span><span class="p">])</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+]]></summary>
+</entry>
+
+</feed>
